@@ -4,7 +4,7 @@ import {
   sortDesc,
   flipDominoes,
   removeAllDuplicates,
-  filterByNumber,
+  deleteDomino,
   findDoubles,
   Domino,
   generateDots,
@@ -57,7 +57,7 @@ const App: React.FC = () => {
   const handleRemoveNumber = () => {
     const numberToRemove = parseInt(input, 10);
     if (!isNaN(numberToRemove)) {
-      setDominoes(filterByNumber(dominoes, numberToRemove));
+      setDominoes(deleteDomino(dominoes, numberToRemove));
     }
     setInput("");
   };

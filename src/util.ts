@@ -1,5 +1,6 @@
 export type Domino = [number, number];
 
+//Untuk Menambahkan array kedalam array
 export const add = (dominoes: Domino[], newDomino: Domino): Domino[] | string => {
     const [left, right] = newDomino;
   
@@ -10,14 +11,17 @@ export const add = (dominoes: Domino[], newDomino: Domino): Domino[] | string =>
     return [...dominoes, newDomino];
   };
 
+//Untuk menyorting dari rendah ke tinggi
 export const sortAsc = (dominoes: Domino[]): Domino[] => {
   return [...dominoes].sort((a, b) => a[0] - b[0]);
 };
 
+//Untuk menyorting dari tinggi ke rendah
 export const sortDesc = (dominoes: Domino[]): Domino[] => {
   return [...dominoes].sort((a, b) => b[0] - a[0]);
 };
 
+//Untuk memutar 
 export const flipDominoes = (dominoes: Domino[]): Domino[] => {
   return dominoes.map(([a, b]) => [b, a]);
 };
@@ -44,8 +48,8 @@ export const removeAllDuplicates = (
     });
   };
 
-export const filterByNumber = (dominoes: Domino[], number: number): Domino[] => {
-  return dominoes.filter(([a, b]) => a !== number && b !== number);
+export const deleteDomino = (dominoes: Domino[], number: number): Domino[] => {
+  return dominoes.filter(([a, b]) => a + b !== number);
 };
 
 export const findDoubles = (dominoes: Domino[]): number => {
@@ -53,11 +57,7 @@ export const findDoubles = (dominoes: Domino[]): number => {
 };
 
 
-/**
- * Function to generate dot positions for a given domino value
- * @param number - The number on the domino (1 to 6)
- * @returns An array of strings representing the positions of dots
- */
+
 export const generateDots = (number: number): string[] => {
   const dotPositions: Record<number, string[]> = {
     1: ['center'],
