@@ -1,3 +1,67 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  @layer utilities {
+    .text-balance {
+      text-wrap: balance;
+    }
+  
+    /* Glowing Text Utility */
+    .glowing-text-aqua {
+      text-shadow: 0 0 8px #00ffab, 0 0 16px #00ffab, 0 0 24px #00ffab;
+      color:aqua
+    }
+    .glowing-text-red {
+      text-shadow: 0 0 8px #c01818, 0 0 16px #cc2520, 0 0 24px #df3416;
+      color:red
+    }
+  
+    /* Shadow Glow Utility */
+    .shadow-glow {
+      box-shadow: 0 0 10px #ff9500, 0 0 20px #ff9500, 0 0 30px #ff9500;
+    }
+  
+    .hover\:shadow-glow:hover {
+      box-shadow: 0 0 10px #ff9500, 0 0 20px #ff9500, 0 0 30px #ff9500;
+    }
+  
+    /* Panel Styles */
+    .panel-content {
+      backdrop-filter: blur(25px);
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
+      padding: 2rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+  
+    .panel-heading {
+      font-size: 2.5rem;
+      color: #fff;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+  
+    .panel-text {
+      color: #ccc;
+      margin-bottom: 1rem;
+    }
+  
+    .panel-button {
+      background: linear-gradient(45deg, #e79b0e, #e95906);
+      color: #ffffff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+  
+    .panel-button:hover {
+      background: linear-gradient(45deg, #10b981, #2563eb);
+    }
+  }
+  

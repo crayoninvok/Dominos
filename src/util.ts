@@ -1,8 +1,14 @@
 export type Domino = [number, number];
 
-export const add = (dominoes: Domino[], newDomino: Domino): Domino[] => {
-  return [...dominoes, newDomino];
-};
+export const add = (dominoes: Domino[], newDomino: Domino): Domino[] | string => {
+    const [left, right] = newDomino;
+  
+    if (left < 0 || left > 6 || right < 0 || right > 6) {
+      return 'Domino values must be between 0 and 6';
+    }
+  
+    return [...dominoes, newDomino];
+  };
 
 export const sortAsc = (dominoes: Domino[]): Domino[] => {
   return [...dominoes].sort((a, b) => a[0] - b[0]);
