@@ -3,11 +3,12 @@ import {
   sortAsc,
   sortDesc,
   flipDominoes,
-  removeDuplicates,
+  removeAllDuplicates,
   filterByNumber,
   findDoubles,
   Domino,
   generateDots,
+  add
 } from "./util";
 
 const App: React.FC = () => {
@@ -24,11 +25,11 @@ const App: React.FC = () => {
   const [input, setInput] = useState("");
 
   // Handlers
-  
+
   const handleSortAsc = () => setDominoes(sortAsc(dominoes));
   const handleSortDesc = () => setDominoes(sortDesc(dominoes));
   const handleFlip = () => setDominoes(flipDominoes(dominoes));
-  const handleRemoveDuplicates = () => setDominoes(removeDuplicates(dominoes));
+  const handleRemoveDuplicates = () => setDominoes(removeAllDuplicates(dominoes));
   const handleReset = () =>
     setDominoes([
       [6, 1],
@@ -39,6 +40,19 @@ const App: React.FC = () => {
       [3, 4],
       [1, 2],
     ]);
+    const [newDomino, setNewDomino] = useState<Domino>([0, 0]);
+    const handleAddDomino = () => {
+      const [left, right] = newDomino;
+    
+      const result = add(dominoes, [left, right]);
+    
+      if (typeof result === 'string') {
+        alert(result); // Display the error message if the result is a string
+      } else {
+        setDominoes(result); // Update the dominoes if the result is valid
+        setNewDomino([0, 0]); // Reset input fields
+      }
+    };
 
   const handleRemoveNumber = () => {
     const numberToRemove = parseInt(input, 10);
@@ -110,13 +124,13 @@ const App: React.FC = () => {
           </label>
           <textarea
             className="border border-gray-500 w-full h-16 shadow-glow glowing-text-aqua bg-black p-4 rounded-lg text-center text-xl font-mono focus:outline-none"
-            value={findDoubles(dominoes).join(", ")}
+            value={findDoubles(dominoes)}
             readOnly
           />
         </div>
 
         {/* Dominoes Display */}
-        <div className="flex flex-wrap gap-4 justify-center mb-4">
+        <div className="flex flex-wrap gap-4 justify-center mb-4 w-full">
           {dominoes.map(([left, right], index) => (
             <div
               key={index}
@@ -173,7 +187,7 @@ const App: React.FC = () => {
         </div>
 
         {/* Remove Number */}
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 mb">
           <input
             type="number"
             value={input}
@@ -186,6 +200,29 @@ const App: React.FC = () => {
             className="px-6 py-3 bg-red-500 text-white font-bold rounded-lg hover:bg-red-600 focus:outline-none"
           >
             Remove
+          </button>
+        </div>
+        {/* Add Domino */}
+        <div className="flex items-center space-x-2 mb-5">
+          <input
+            type="number"
+            value={newDomino[0]}
+            onChange={(e) => setNewDomino([+e.target.value, newDomino[1]])}
+            className="border border-gray-500 bg-gray-100 p-3 rounded-lg w-full text-center text-lg font-mono focus:outline-none"
+            placeholder="Left Number (0-6)"
+          />
+          <input
+            type="number"
+            value={newDomino[1]}
+            onChange={(e) => setNewDomino([newDomino[0], +e.target.value])}
+            className="border border-gray-500 bg-gray-100 p-3 rounded-lg w-full text-center text-lg font-mono focus:outline-none"
+            placeholder="Right Number (0-6)"
+          />
+          <button
+            onClick={handleAddDomino}
+            className="px-6 py-3 bg-green-500 text-white font-bold rounded-lg hover:bg-green-600 focus:outline-none"
+          >
+            Add
           </button>
         </div>
       </div>

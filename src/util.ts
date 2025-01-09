@@ -22,26 +22,36 @@ export const flipDominoes = (dominoes: Domino[]): Domino[] => {
   return dominoes.map(([a, b]) => [b, a]);
 };
 
-export const removeDuplicates = (dominoes: Domino[]): Domino[] => {
-  const seen = new Set();
-  return dominoes.filter(([a, b]) => {
-    const key = `${a}-${b}`;
-    const reverseKey = `${b}-${a}`;
-    if (seen.has(key) || seen.has(reverseKey)) {
-      return false;
-    }
-    seen.add(key);
-    return true;
-  });
-};
+export const removeAllDuplicates = (
+    dominoes: [number, number][]
+  ): [number, number][] => {
+    const uniqueDominoes: Set<string> = new Set();
+    const duplicates: Set<string> = new Set();
+  
+    dominoes.forEach(item => {
+      const sortedItem = [...item].sort((a, b) => a - b).join(',');
+  
+      if (uniqueDominoes.has(sortedItem)) {
+        duplicates.add(sortedItem);
+      } else {
+        uniqueDominoes.add(sortedItem);
+      }
+    });
+  
+    return dominoes.filter(item => {
+      const sortedItem = [...item].sort((a, b) => a - b).join(','); 
+      return !duplicates.has(sortedItem);
+    });
+  };
 
 export const filterByNumber = (dominoes: Domino[], number: number): Domino[] => {
   return dominoes.filter(([a, b]) => a !== number && b !== number);
 };
 
-export const findDoubles = (dominoes: Domino[]): number[] => {
-  return dominoes.filter(([a, b]) => a === b).map(([a]) => a);
+export const findDoubles = (dominoes: Domino[]): number => {
+  return dominoes.filter(([a, b]) => a === b).length;
 };
+
 
 /**
  * Function to generate dot positions for a given domino value
