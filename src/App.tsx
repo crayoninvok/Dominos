@@ -7,6 +7,7 @@ import {
   filterByNumber,
   findDoubles,
   Domino,
+  generateDots,
 } from './util';
 
 const App: React.FC = () => {
@@ -46,7 +47,43 @@ const App: React.FC = () => {
     setInput('');
   };
 
-  
+  // Renders dots for a domino value
+  const renderDots = (number: number) => {
+    const positions = generateDots(number);
+
+    return (
+      <div className="grid grid-cols-3 gap-1 w-16 h-20 relative">
+        {Array(9)
+          .fill(null)
+          .map((_, index) => {
+            const position = getPosition(index);
+            return (
+              <div
+                key={index}
+                className={`h-3 w-3 rounded-full bg-black ${
+                  positions.includes(position) ? '' : 'opacity-0'
+                }`}
+              />
+            );
+          })}
+      </div>
+    );
+  };
+
+  const getPosition = (index: number) => {
+    const positions = [
+      'top-left',
+      'top-center',
+      'top-right',
+      'middle-left',
+      'center',
+      'middle-right',
+      'bottom-left',
+      'bottom-center',
+      'bottom-right',
+    ];
+    return positions[index];
+  };
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
@@ -73,15 +110,24 @@ const App: React.FC = () => {
       </div>
 
       {/* Dominoes Display */}
-      <div className="flex flex-wrap mb-4">
+      <div className="flex flex-wrap gap-4 justify-center mb-4">
         {dominoes.map(([left, right], index) => (
           <div
             key={index}
-            className="flex items-center justify-center border border-gray-300 rounded w-16 h-10 bg-white shadow-md mx-1"
+            className="flex flex-col items-center justify-between border-2 border-black rounded-lg bg-white shadow-lg w-20 h-40"
           >
-            <div className="text-lg font-bold">{left}</div>
-            <div className="mx-1">|</div>
-            <div className="text-lg font-bold">{right}</div>
+            {/* Top Side */}
+            <div className="w-full flex-1 flex items-center justify-center border-b-2 border-black">
+              {renderDots(left)}
+            </div>
+
+            {/* Divider */}
+            <div className="w-full h-1 bg-black" />
+
+            {/* Bottom Side */}
+            <div className="w-full flex-1 flex items-center justify-center">
+              {renderDots(right)}
+            </div>
           </div>
         ))}
       </div>
